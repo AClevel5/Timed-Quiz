@@ -32,7 +32,7 @@ function countDown() {
   }, 1000);
 }
 // Will end up calling countdown() on start button click
-countDown()
+//countDown()
 
 // question 
 
