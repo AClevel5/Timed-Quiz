@@ -1,0 +1,32 @@
+main {
+    margin: 50px 350px 50px 350px;
+    border: black solid 2px;
+    padding: 10px;
+    box-shadow: 10px 10px black;
+    border-radius: 5px; 
+
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.direction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.quiz {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+#start {
+    display: flex;
+    justify-content: right;
+    align-items: right;
+}
