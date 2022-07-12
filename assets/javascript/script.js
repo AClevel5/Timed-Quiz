@@ -1,20 +1,15 @@
 //Declare Variables
 var timerEl = document.querySelector("timer")
-//Score & Time
-//Starting Time
+
 
 //Question/Answer Object
 
 let question = document.createElement("p")
 
 const questions = {
-  Question1: "Ask question here",
-  Answer1: ["strings", "of", "answers here"]
+  Question0: "Ask question here",
+  Options0: ["strings", "of", "answers here"]
 }
-
-//Hide start button/ Start button start time
-
-//clear page div.welcome cleared - html div welcome and button element
 
 //Start a Countdown Timer 75 seconds. Time can't go below 0. At 0 timer disapears.
 
@@ -31,22 +26,20 @@ function countDown() {
     }
   }, 1000);
 }
-// Will end up calling countdown() on start button click
-//countDown()
 
-// question 
+// Start button - On click call countDown() for loop to rotate through questions as they are answered.
+
+// Logic for Questions
 
         //if user picks correctly show next question
-        //if user picks incorrectly time decreases by 15 seconds
+        //if user picks incorrectly time decreases by 15 seconds and show next question
+        //push score to memory
 
 // if all questions are answered else time reaches 0
 
 //end game
-    //put in initials for leaderboard
-    //go back button or clear highschoors
-
-    //welcome.setAttribute("style", "visibility:visible"
+    //prompt in initials for leaderboard
+    //go back button or clear highscores
     //view highscores
 
 
-    //logic for questions
