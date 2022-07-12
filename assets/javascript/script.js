@@ -1,4 +1,5 @@
 //Declare Variables
+var timerEl = document.querySelector("timer")
 //Score & Time
 //Starting Time
 
@@ -7,34 +8,31 @@
 let question = document.createElement("p")
 
 const questions = {
-    Question1:"Ask question here",
-    Answer1:["strings","of","answers here"]
+  Question1: "Ask question here",
+  Answer1: ["strings", "of", "answers here"]
 }
 
 //Hide start button/ Start button start time
 
 //clear page div.welcome cleared - html div welcome and button element
 
-// countdownloop cant go below 0
+//Start a Countdown Timer 75 seconds. Time can't go below 0. At 0 timer disapears.
 
-function countdown() {
-    var timeLeft = 75;
-  
-    // TODO: Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function () {
-     
-      if(timeLeft === 0) {
-        timeLeft--;
-         //timerEl.textContent = timeLeft + " seconds";
-         //countDown.appendChild(timer);
-      }
-      else{
-        clearInterval(timeInterval)
-      }
-      
-    }, 1000);
-      
-  }
+function countDown() {
+  var timeLeft = 75;
+  var timeInterval = setInterval(function () {
+    if (timeLeft > 0) {
+      timeLeft--;
+      timerEl.textContent = timeLeft + " seconds";
+    }
+    else {
+      clearInterval(timeInterval)
+      timerEl.textContent = ""
+    }
+  }, 1000);
+}
+// Will end up calling countdown() on start button click
+countDown()
 
 // question 
 

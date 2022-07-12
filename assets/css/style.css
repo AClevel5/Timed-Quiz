@@ -35,3 +35,11 @@ h1 {
 ol {
     list-style: none;
 }
+
+timer {
+    font-size: 75px;
+    display: flex;
+    align-items: right;
+    justify-content: right;
+
+}
