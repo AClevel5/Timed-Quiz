@@ -2,38 +2,39 @@
 var timerEl = document.querySelector("timer");
 var timeLeft = 75;
 var startButton = document.querySelector("#start");
-var option0 = document.querySelector("#option0");
-var option1 = document.querySelector("#option1");
-var option2 = document.querySelector("#option2");
-var option3 = document.querySelector("#option3");
-let question = document.createElement("p");
-
+var option0 = document.querySelector("#button0");
+var option1 = document.querySelector("#button1");
+var option2 = document.querySelector("#button2");
+var option3 = document.querySelector("#button3");
+var question = document.querySelector(".direction");
+let currentQuestion = 0;
 //Question/Answer Object
-const question0 = {
-  question0: "A broken clock is right how many times a day?",
-  options0: ["One", "Two", "Three", "Four"],
-  answer0: "Two",
-};
-const question1 = {
-  question1: "What time of cheese is made backwards?",
-  options1: ["Cheddar", "Edam", "Gouda", "Provalone?"],
-  answer1: "Edam?",
-};
-const question2 = {
-  question2: "What 5 letter word becomes shorter when you add 2 letters?",
-  options2: ["Trash", "Short", "Elbow", "Bones"],
-  answer2: "Short",
-};
-const question3 = {
-  question3: "What invention allows a person to look right through a wall?",
-  options3: ["Geothermal Ocular Lenses", "UV Sensative Camera", "Granular Imaging Processor", "A Window"],
-  answer3: "A Window",
-};
-const question4 = {
-  question4: "When buying stocks you should buy low and sell _____?",
-  options4: ["Low", "At the Same Price", "High", "Immediately"],
-  answer4: "High",
-};
+const questions = [
+  {
+    question: "A broken clock is right how many times a day?",
+    options: ["One", "Two", "Three", "Four"],
+    answer: "Two",
+  },
+  {
+    question: "What time of cheese is made backwards?",
+    options: ["Cheddar", "Edam", "Gouda", "Provalone?"],
+    answer: "Edam?",
+  },
+  {
+    question: "What 5 letter word becomes shorter when you add 2 letters?",
+    options: ["Trash", "Short", "Elbow", "Bones"],
+    answer: "Short",
+  },
+  {
+    question: "What invention allows a person to look right through a wall?",
+    options: ["Geothermal Ocular Lenses", "UV Sensative Camera", "Granular Imaging Processor", "A Window"],
+    answer: "A Window",
+  },
+  {
+    question: "When buying stocks you should buy low and sell _____?",
+    options: ["Low", "At the Same Price", "High", "Immediately"],
+    answer: "High",
+  }];
 
 //Hide Option Buttons on start page
 option0.style.display = "none";
@@ -64,10 +65,40 @@ function startGame() {
   option1.style.display = "block";
   option2.style.display = "block";
   option3.style.display = "block";
-
+  askQuestion();
 };
 
 // Logic for Questions
+function isCorrectAnswer(answer){
+  return answer === questions[currentQuestion].answer;
+  };
+
+ // Handles your click to be correct or incorrect. Subtracts 15 seconds if incorrect. Moves to next question. 
+function handleAnswer(event){
+  const chosenAnswer = event.target.innerHTML;
+  const isCorrect = isCorrectAnswer(chosenAnswer);
+  if (!isCorrect){
+    timeLeft -= 15;
+  }
+  currentQuestion++
+  askQuestion();
+  
+
+};
+
+//Changes text content of buttons.
+
+function askQuestion(){
+
+  question.innerHTML = questions[currentQuestion].question;
+  option0.textContent = questions[currentQuestion].options[0];
+  option1.textContent = questions[currentQuestion].options[1];
+  option2.textContent = questions[currentQuestion].options[2];
+  option3.textContent = questions[currentQuestion].options[3];
+  
+};
+
+
 
 //if user picks correctly show next question
 //if user picks incorrectly time decreases by 15 seconds and show next question
@@ -81,4 +112,8 @@ function startGame() {
 //view highscores
 // Event Listeners: Start button on click
 startButton.addEventListener("click", startGame);
+option0.addEventListener("click", handleAnswer);
+option1.addEventListener("click", handleAnswer);
+option2.addEventListener("click", handleAnswer);
+option3.addEventListener("click", handleAnswer);
 
