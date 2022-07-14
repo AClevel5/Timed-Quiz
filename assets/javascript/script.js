@@ -7,6 +7,7 @@ var option1 = document.querySelector("#button1");
 var option2 = document.querySelector("#button2");
 var option3 = document.querySelector("#button3");
 var question = document.querySelector(".direction");
+var result = document.querySelector("result");
 let currentQuestion = 0;
 //Question/Answer Object
 const questions = [
@@ -18,7 +19,7 @@ const questions = [
   {
     question: "What time of cheese is made backwards?",
     options: ["Cheddar", "Edam", "Gouda", "Provalone?"],
-    answer: "Edam?",
+    answer: "Edam",
   },
   {
     question: "What 5 letter word becomes shorter when you add 2 letters?",
@@ -68,7 +69,7 @@ function startGame() {
   askQuestion();
 };
 
-// Logic for Questions
+// Question Logic
 function isCorrectAnswer(answer){
   return answer === questions[currentQuestion].answer;
   };
@@ -79,37 +80,37 @@ function handleAnswer(event){
   const isCorrect = isCorrectAnswer(chosenAnswer);
   if (!isCorrect){
     timeLeft -= 15;
+    //result.textContent = "Incorrect";
   }
-  currentQuestion++
+  currentQuestion++;
+  //result.textContent = "Correct";
   askQuestion();
   
 
 };
 
 //Changes text content of buttons.
-
 function askQuestion(){
-
+  
   question.innerHTML = questions[currentQuestion].question;
   option0.textContent = questions[currentQuestion].options[0];
   option1.textContent = questions[currentQuestion].options[1];
   option2.textContent = questions[currentQuestion].options[2];
   option3.textContent = questions[currentQuestion].options[3];
-  
 };
 
 
 
-//if user picks correctly show next question
-//if user picks incorrectly time decreases by 15 seconds and show next question
-//push score to memory
+
+
+
 
 // if all questions are answered else time reaches 0
-
-//end game
+//end game & push score to memory
 //prompt in initials for leaderboard
 //go back button or clear highscores
 //view highscores
+
 // Event Listeners: Start button on click
 startButton.addEventListener("click", startGame);
 option0.addEventListener("click", handleAnswer);
