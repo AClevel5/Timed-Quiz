@@ -9,6 +9,8 @@ var option3 = document.querySelector("#button3");
 var question = document.querySelector(".direction");
 var result = document.querySelector("result");
 let currentQuestion = 0;
+
+const {log} = console;;
 //Question/Answer Object
 const questions = [
   {
@@ -72,25 +74,47 @@ function startGame() {
 // Question Logic
 function isCorrectAnswer(answer){
   return answer === questions[currentQuestion].answer;
-  };
+};
 
  // Handles your click to be correct or incorrect. Subtracts 15 seconds if incorrect. Moves to next question. 
 function handleAnswer(event){
+  log("currentQuestion: ", currentQuestion);
+  log("length: ", questions.length);
+
+ // handle event delegation in JavaScript
+ const target = event.target;
+
+ if (target.className === "option") {
+  if (isGameEnd()) {
+    return endGame();
+  }
   const chosenAnswer = event.target.innerHTML;
   const isCorrect = isCorrectAnswer(chosenAnswer);
   if (!isCorrect){
     timeLeft -= 15;
-    //result.textContent = "Incorrect";
+    result.textContent = "Incorrect";
+    currentQuestion++;
+    askQuestion();
+    return;
   }
   currentQuestion++;
-  //result.textContent = "Correct";
+  result.textContent = "Correct";
   askQuestion();
-  
+ }
+};
 
+const isGameEnd = () => timeLeft === 0 || questions.length  === currentQuestion;
+
+function endGame(){
+  document.querySelector(".questions").classList.add("hide")
+  document.querySelector(".result").classList.remove("hide")
 };
 
 //Changes text content of buttons.
 function askQuestion(){
+  if (isGameEnd()) {
+    return endGame();
+  }
   
   question.innerHTML = questions[currentQuestion].question;
   option0.textContent = questions[currentQuestion].options[0];
@@ -113,8 +137,5 @@ function askQuestion(){
 
 // Event Listeners: Start button on click
 startButton.addEventListener("click", startGame);
-option0.addEventListener("click", handleAnswer);
-option1.addEventListener("click", handleAnswer);
-option2.addEventListener("click", handleAnswer);
-option3.addEventListener("click", handleAnswer);
 
+document.addEventListener("click", handleAnswer);
