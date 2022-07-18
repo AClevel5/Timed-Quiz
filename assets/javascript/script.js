@@ -2,6 +2,8 @@
 var timerEl = document.querySelector("timer");
 var timeLeft = 75;
 var startButton = document.querySelector("#start");
+var playAgain = document.querySelector("#playAgain");
+var addHighScore = document.querySelector("#addHighScore")
 var option0 = document.querySelector("#button0");
 var option1 = document.querySelector("#button1");
 var option2 = document.querySelector("#button2");
@@ -9,6 +11,8 @@ var option3 = document.querySelector("#button3");
 var question = document.querySelector(".direction");
 var result = document.querySelector("result");
 let currentQuestion = 0;
+var timeInterval = 0;
+let score = 0;
 
 const {log} = console;;
 //Question/Answer Object
@@ -48,13 +52,14 @@ option3.style.display = "none";
 //Start a Countdown Timer 75 seconds. Time can't go below 0. At 0 timer disapears.
 function countDown() {
   var timeInterval = setInterval(function () {
-    if (timeLeft > 0) {
+    if (timeLeft > 0 && !isGameEnd()) {
       timeLeft--;
       timerEl.textContent = timeLeft + " seconds";
     }
     else {
       clearInterval(timeInterval)
       timerEl.textContent = ""
+      endGame();
     }
   }, 1000);
 }
@@ -78,8 +83,8 @@ function isCorrectAnswer(answer){
 
  // Handles your click to be correct or incorrect. Subtracts 15 seconds if incorrect. Moves to next question. 
 function handleAnswer(event){
-  log("currentQuestion: ", currentQuestion);
-  log("length: ", questions.length);
+  //log("currentQuestion: ", currentQuestion);
+  //log("length: ", questions.length);
 
  // handle event delegation in JavaScript
  const target = event.target;
@@ -106,8 +111,18 @@ function handleAnswer(event){
 const isGameEnd = () => timeLeft === 0 || questions.length  === currentQuestion;
 
 function endGame(){
-  document.querySelector(".questions").classList.add("hide")
-  document.querySelector(".result").classList.remove("hide")
+  document.querySelector(".questions").classList.add("hide");
+  document.querySelector(".result").classList.remove("hide");
+  question.textContent = "Game Complete";
+  score = timeLeft;
+  result.textContent = "Score: " + score;
+  playAgain.classList.remove("hide");
+  addHighScore.classList.remove("hide");
+};
+
+function refreshScreen(){
+  location.reload();
+
 };
 
 //Changes text content of buttons.
@@ -139,3 +154,4 @@ function askQuestion(){
 startButton.addEventListener("click", startGame);
 
 document.addEventListener("click", handleAnswer);
+playAgain.addEventListener("click", refreshScreen);
