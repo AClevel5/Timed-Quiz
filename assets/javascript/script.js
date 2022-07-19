@@ -4,15 +4,18 @@ var timeLeft = 75;
 var startButton = document.querySelector("#start");
 var playAgain = document.querySelector("#playAgain");
 var addHighScore = document.querySelector("#addHighScore")
+var leaderBoard = document.querySelector("#leaderBoard");
 var option0 = document.querySelector("#button0");
 var option1 = document.querySelector("#button1");
 var option2 = document.querySelector("#button2");
 var option3 = document.querySelector("#button3");
 var question = document.querySelector(".direction");
-var result = document.querySelector("result");
+var result = document.querySelector(".result");
 let currentQuestion = 0;
 var timeInterval = 0;
 let score = 0;
+var newHighScores = document.querySelector("#rankings");
+var lb = document.querySelector(".LB");
 
 const { log } = console;;
 //Question/Answer Object
@@ -120,6 +123,7 @@ function endGame() {
   result.textContent = "Score: " + score;
   playAgain.classList.remove("hide");
   addHighScore.classList.remove("hide");
+  leaderBoard.classList.remove("hide");
 };
 
 // Button logic to play again
@@ -145,19 +149,35 @@ function askQuestion() {
 function enterHighScore() {
   let initials = prompt("Please enter your initials");
   if (initials !== "") {
+    var scoreList = JSON.parse(localStorage.getItem("New Entry")) || [];
     var newEntry = {
       score: score,
-      initials: initials,
+      initials: initials.toUpperCase(),
     };
-    console.log(score);
-    console.log(initials);
-    console.log(newEntry);
+    scoreList.push(newEntry);
+    localStorage.setItem("New Entry", JSON.stringify(scoreList));
   } else {
       alert("Please enter your initials");
     };
 
   };
 
+  function pageHighScore(){
+    lb.classList.remove("hide");
+    var highScores = JSON.parse(localStorage.getItem("New Entry"));
+    console.log(highScores);
+    sortedHighScores = highScores.sort((a, b) => b.score - a.score);
+    for (let index = 0; index < sortedHighScores.length; index++) {
+    var listItem = document.createElement("li");
+    listItem.textContent = "Player: " + sortedHighScores[index].initials + "  Score: " + sortedHighScores[index].score;
+    //console.log(newHighScores);
+    //console.log(listItem);
+    newHighScores.appendChild(listItem);
+    }
+    
+
+
+  };
 
 
 //Add Leaderboard to show highscores
@@ -172,3 +192,4 @@ startButton.addEventListener("click", startGame);
 document.addEventListener("click", handleAnswer);
 playAgain.addEventListener("click", refreshScreen);
 addHighScore.addEventListener("click", enterHighScore);
+leaderBoard.addEventListener("click", pageHighScore);
