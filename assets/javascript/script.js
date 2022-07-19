@@ -14,7 +14,7 @@ let currentQuestion = 0;
 var timeInterval = 0;
 let score = 0;
 
-const {log} = console;;
+const { log } = console;;
 //Question/Answer Object
 const questions = [
   {
@@ -77,40 +77,42 @@ function startGame() {
 };
 
 // Question Logic
-function isCorrectAnswer(answer){
+function isCorrectAnswer(answer) {
   return answer === questions[currentQuestion].answer;
 };
 
- // Handles your click to be correct or incorrect. Subtracts 15 seconds if incorrect. Moves to next question. 
-function handleAnswer(event){
+// Handles your click to be correct or incorrect. Subtracts 15 seconds if incorrect. Moves to next question. 
+function handleAnswer(event) {
   //log("currentQuestion: ", currentQuestion);
   //log("length: ", questions.length);
 
- // handle event delegation in JavaScript
- const target = event.target;
+  // handle event delegation in JavaScript
+  const target = event.target;
 
- if (target.className === "option") {
-  if (isGameEnd()) {
-    return endGame();
-  }
-  const chosenAnswer = event.target.innerHTML;
-  const isCorrect = isCorrectAnswer(chosenAnswer);
-  if (!isCorrect){
-    timeLeft -= 15;
-    result.textContent = "Incorrect";
+  if (target.className === "option") {
+    if (isGameEnd()) {
+      return endGame();
+    }
+    const chosenAnswer = event.target.innerHTML;
+    const isCorrect = isCorrectAnswer(chosenAnswer);
+    if (!isCorrect) {
+      timeLeft -= 15;
+      result.textContent = "Incorrect";
+      currentQuestion++;
+      askQuestion();
+      return;
+    }
     currentQuestion++;
+    result.textContent = "Correct";
     askQuestion();
-    return;
   }
-  currentQuestion++;
-  result.textContent = "Correct";
-  askQuestion();
- }
 };
 
-const isGameEnd = () => timeLeft === 0 || questions.length  === currentQuestion;
+// Check if Game is over
+const isGameEnd = () => timeLeft === 0 || questions.length === currentQuestion;
 
-function endGame(){
+// Function to run when game is done
+function endGame() {
   document.querySelector(".questions").classList.add("hide");
   document.querySelector(".result").classList.remove("hide");
   question.textContent = "Game Complete";
@@ -120,17 +122,18 @@ function endGame(){
   addHighScore.classList.remove("hide");
 };
 
-function refreshScreen(){
+// Button logic to play again
+function refreshScreen() {
   location.reload();
 
 };
 
 //Changes text content of buttons.
-function askQuestion(){
+function askQuestion() {
   if (isGameEnd()) {
     return endGame();
   }
-  
+
   question.innerHTML = questions[currentQuestion].question;
   option0.textContent = questions[currentQuestion].options[0];
   option1.textContent = questions[currentQuestion].options[1];
@@ -138,20 +141,34 @@ function askQuestion(){
   option3.textContent = questions[currentQuestion].options[3];
 };
 
+//Add Highscore button function to store results in local storage
+function enterHighScore() {
+  let initials = prompt("Please enter your initials");
+  if (initials !== "") {
+    var newEntry = {
+      score: score,
+      initials: initials,
+    };
+    console.log(score);
+    console.log(initials);
+    console.log(newEntry);
+  } else {
+      alert("Please enter your initials");
+    };
+
+  };
+
+
+
+//Add Leaderboard to show highscores
 
 
 
 
 
-
-// if all questions are answered else time reaches 0
-//end game & push score to memory
-//prompt in initials for leaderboard
-//go back button or clear highscores
-//view highscores
 
 // Event Listeners: Start button on click
 startButton.addEventListener("click", startGame);
-
 document.addEventListener("click", handleAnswer);
 playAgain.addEventListener("click", refreshScreen);
+addHighScore.addEventListener("click", enterHighScore);
