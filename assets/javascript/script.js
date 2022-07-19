@@ -145,7 +145,7 @@ function askQuestion() {
   option3.textContent = questions[currentQuestion].options[3];
 };
 
-//Add Highscore button function to store results in local storage
+//Add Highscore button function to prompt for initials & push them and score to local storage.
 function enterHighScore() {
   let initials = prompt("Please enter your initials");
   if (initials !== "") {
@@ -157,34 +157,25 @@ function enterHighScore() {
     scoreList.push(newEntry);
     localStorage.setItem("New Entry", JSON.stringify(scoreList));
   } else {
-      alert("Please enter your initials");
-    };
-
+    alert("Please enter your initials");
   };
 
-  function pageHighScore(){
-    lb.classList.remove("hide");
-    var highScores = JSON.parse(localStorage.getItem("New Entry"));
-    console.log(highScores);
-    sortedHighScores = highScores.sort((a, b) => b.score - a.score);
-    for (let index = 0; index < sortedHighScores.length; index++) {
+};
+//Get high scores from local storage & append to list.
+function pageHighScore() {
+  lb.classList.remove("hide");
+  var highScores = JSON.parse(localStorage.getItem("New Entry"));
+  console.log(highScores);
+  sortedHighScores = highScores.sort((a, b) => b.score - a.score);
+  for (let index = 0; index < sortedHighScores.length; index++) {
     var listItem = document.createElement("li");
     listItem.textContent = "Player: " + sortedHighScores[index].initials + "  Score: " + sortedHighScores[index].score;
-    //console.log(newHighScores);
-    //console.log(listItem);
     newHighScores.appendChild(listItem);
-    }
-    
-
-
-  };
-
-
-//Add Leaderboard to show highscores
+  }
 
 
 
-
+};
 
 
 // Event Listeners: Start button on click
